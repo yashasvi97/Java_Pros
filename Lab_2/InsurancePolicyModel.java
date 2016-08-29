@@ -3,15 +3,12 @@ class VehiclePolicy {
 	long policyNumber;
 	date expiryDate;
 	String classes;
-<<<<<<< HEAD:Lab_2/InsurancePolicy.java
 	static long count = 1000000L;
 	static float policyCoverThirdParty;
 	static float policyCoverSelf;
-=======
 	long count = 1000000L;
 	float policyCoverThirdParty;
 	float policyCoverSelf;
->>>>>>> a63751469bf370e08a546c1e38483a4c631d9102:Lab_2/InsurancePolicyModel.java
 	public VehiclePolicy(int day, int month, int year, float tparty, float self) {
 		policyNumber = getPolicyNew();
 		policyCoverSelf = self;
@@ -21,12 +18,9 @@ class VehiclePolicy {
 			classes = "Third Party Policy";
 		else
 			classes = "Package Policy";
-<<<<<<< HEAD:Lab_2/InsurancePolicy.java
 	}
 	public String getClasses() {
 		return classes;
-=======
->>>>>>> a63751469bf370e08a546c1e38483a4c631d9102:Lab_2/InsurancePolicyModel.java
 	}
 	public String getClasses() {
 		return classes;
@@ -67,22 +61,11 @@ class date {
 	public int getYear() {
 		return y;
 	}
-	/*public void setDay(int day) {
-		d = day;
-	}
-	public void setMonth(int month) {
-		m = month;
-	}
-	public void setYear(int year) {
-		y = year;
-	}*/
 }
 class ThirdPartyPolicy extends VehiclePolicy {
 	public ThirdPartyPolicy(int day, int month, int year) {
 		super(day,month,year,0.8f,0.0f);
-	}
-	
-	
+	}	
 }
 class PackagePolicy extends VehiclePolicy {
 	public PackagePolicy(int day, int month, int year) {
