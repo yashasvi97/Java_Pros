@@ -10,3 +10,9 @@ Lab :
 
 Instructor :
 	Dr Chetan Arora
+Note :
+	Please run the Java Application in fullscreen for better viewing
+	Use the following commands to run the application (RoadAccidentInsurance.java file contains the main() function) :-
+
+	javac *.java
+	java RoadAccidentInsurance
