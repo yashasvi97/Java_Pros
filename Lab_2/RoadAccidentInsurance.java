@@ -23,37 +23,29 @@ public class RoadAccidentInsurance {
 		// bmx data
 		System.out.println("Entering BMX cycle data...");
 		BMX cycle2 = new BMX("Yashasvi", "BMX");
-		Hercules cycle1 = new Hercules("Viraj", "Hercules Speedo");		
-		// bmx data
-		System.out.println("Entering BMX cycle data...");
-		BMX cycle2 = new BMX("Yashasvi", "BMX JUMP");
 		// bajaj data
 		System.out.println("Entering Bajaj bike data...");
 		day[0] = 2;
 		month[0] = 11;
 		year[0] = 2018;
-		Bajaj bike1 = new Bajaj("Parimi", "Bajaj", 1, day[0], month[0], year[0]);
 		Bajaj bike1 = new Bajaj("Parimi", "Bajaj 250CC", 1, day[0], month[0], year[0]);
 		// Hero data
 		System.out.println("Entering Hero bike data...");
 		day[1] = 12;
 		month[1] = 8;
 		year[1] = 2010;
-		Hero bike2 = new Hero("Baweja", "Hero", 1, day[1], month[1], year[1]);
 		Hero bike2 = new Hero("Baweja", "Hero 270CC", 1, day[1], month[1], year[1]);
 		// maruti data
 		System.out.println("Entering Maruti car data...");
 		day[2] = 24;
 		month[2] = 4;
 		year[2] = 2020;
-		Maruti car1 = new Maruti("Mrinal", "Maruti", 2, day[2], month[2], year[2]);	
 		Maruti car1 = new Maruti("Mrinal", "Maruti 800", 2, day[2], month[2], year[2]);	
 		// honda data
 		System.out.println("Entering Honda car data...");
 		day[3] = 17;
 		month[3] = 12;
 		year[3] = 2010;
-		Honda car2 = new Honda("Abrol", "Honda", 2, day[3], month[3], year[3]);
 		Honda car2 = new Honda("Abrol", "Honda City", 2, day[3], month[3], year[3]);
 		System.out.println("\n" + "      Now all objects have been initialised, fetching data" + "\n");
 		System.out.println("------------------------------------------------------------------------");

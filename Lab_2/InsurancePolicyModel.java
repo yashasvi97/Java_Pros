@@ -3,9 +3,6 @@ class VehiclePolicy {
 	long policyNumber;
 	date expiryDate;
 	String classes;
-	static long count = 1000000L;
-	static float policyCoverThirdParty;
-	static float policyCoverSelf;
 	long count = 1000000L;
 	float policyCoverThirdParty;
 	float policyCoverSelf;
@@ -18,9 +15,6 @@ class VehiclePolicy {
 			classes = "Third Party Policy";
 		else
 			classes = "Package Policy";
-	}
-	public String getClasses() {
-		return classes;
 	}
 	public String getClasses() {
 		return classes;
