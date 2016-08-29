@@ -1,11 +1,14 @@
 import java.util.*;
 import java.lang.*;
 class Vehicle {
-	int tyres;
+	int tyres,modelNumber,insured;
 	String owner;
+	static int uniqueId = 0;
 	public Vehicle(int wheels,String name) {
 		tyres = wheels;
 		owner = name;
+		insured = 0;
+		modelNumber = getNewId();
 	}
 	public int getWheels() {
 		return tyres;
@@ -13,54 +16,43 @@ class Vehicle {
 	public String getOwnerName() {
 		return owner;
 	}
+	public static int getNewId() {
+		uniqueId = uniqueId + 1;
+		return uniqueId;
+	}
+	public int getId() {
+		return modelNumber;
+	}
+	public void setInsured(int option) {
+		insured = option;
+	}
+	public int getInsured() {
+		return insured;
+	}
 }
 class EnginePoweredVehicle extends Vehicle {
-	ThirdPartyPolicy policy1;
-	PackagePolicy policy2;
-	public EnginePoweredVehicle(int wheels, String name, int option, int day, int month, int year) {
+	VehiclePolicy policy;
+	public EnginePoweredVehicle(int wheels, String name, int op, int day, int month, int year) {
 		super(wheels,name);
-		if(option == 1) {
-			policy1 = new ThirdPartyPolicy(day,month,year);
+		setInsured(op);
+		if(op == 1) {
+			policy = new ThirdPartyPolicy(day,month,year);
 		}
 		else {
-			policy2 = new PackagePolicy(day,month,year);
+			policy = new PackagePolicy(day,month,year);
 		}
 	}
 	public String getPolicyClass() {
-		if(policy1 == null) {
-			return policy2.getClasses();
-		}
-		else if(policy2 == null) {
-			return policy1.getClasses();
-		}
-		return "";
+		return policy.getClasses();
 	}
 	public float getPolicyOncomingRefund() {
-		if(policy1 == null) {
-			return policy2.getThirdParty();
-		}
-		else if(policy2 == null) {
-			return policy1.getThirdParty();
-		}
-		return 0;	
+		return policy.getThirdParty();
 	}
 	public float getPolicySelfRefund() {
-		if(policy1 == null) {
-			return policy2.getSelf();
-		}
-		else if(policy2 == null) {
-			return policy1.getSelf();
-		}
-		return 0;	
+		return policy.getSelf();	
 	}
 	public String getPolicyExpiry() {
-		if(policy1 == null) {
-			return policy2.getExpiryDate();
-		}
-		else if(policy2 == null) {
-			return policy1.getExpiryDate();
-		}
-		return "";	
+		return policy.getExpiryDate();
 	}
 }
 class ManualDriven extends Vehicle {
