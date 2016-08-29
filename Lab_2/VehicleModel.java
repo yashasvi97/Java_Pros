@@ -54,6 +54,9 @@ class EnginePoweredVehicle extends Vehicle {
 	public String getPolicyExpiry() {
 		return policy.getExpiryDate();
 	}
+	public long getPolicyNumber() {
+		return policy.getPolicy();
+	}
 }
 class ManualDriven extends Vehicle {
 	public ManualDriven(int wheels,String name) {
