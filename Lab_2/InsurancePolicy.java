@@ -4,8 +4,8 @@ class VehiclePolicy {
 	date expiryDate;
 	String classes;
 	static long count = 1000000L;
-	static float policyCoverThirdParty;
-	static float policyCoverSelf;
+	float policyCoverThirdParty;
+	float policyCoverSelf;
 	public VehiclePolicy(int day, int month, int year, float tparty, float self) {
 		policyNumber = getPolicyNew();
 		policyCoverSelf = self;
@@ -19,10 +19,10 @@ class VehiclePolicy {
 	public String getClasses() {
 		return classes;
 	}
-	public static float getThirdParty() {
+	public float getThirdParty() {
 		return policyCoverThirdParty;
 	}
-	public static float getSelf() {
+	public float getSelf() {
 		return policyCoverSelf;
 	}
 	public static long getPolicyNew() {

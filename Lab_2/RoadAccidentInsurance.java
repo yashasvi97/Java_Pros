@@ -88,7 +88,7 @@ public class RoadAccidentInsurance {
 		policyExpiry[1] = bike2.getPolicyExpiry();
 		selfRefund[1] = bike2.getPolicySelfRefund();
 		onComingRefund[1] = bike2.getPolicyOncomingRefund();
-		System.out.println("Model : " + modelName[3] + " ; Owner : " + ownerName[3] + " ; Wheels : " + wheels[3] + " ; Policy Type : " + policyType[1] + " ; Policy Expiry " + policyExpiry[1]);
+		System.out.println("Model : " + modelName[3] + " ; Owner : " + ownerName[3] + " ; Wheels : " + wheels[3] + " ; Policy Type : " + policyType[1] + " ; Policy Expiry " + policyExpiry[1] + " ; selfRefund " + selfRefund[1] + " ; onComingRefund " + onComingRefund[1]);
 		
 		modelName[4] = car1.getModel();
 		ownerName[4] = car1.getOwnerName();
@@ -99,7 +99,7 @@ public class RoadAccidentInsurance {
 		policyExpiry[2] = car1.getPolicyExpiry();
 		selfRefund[2] = car1.getPolicySelfRefund();
 		onComingRefund[2] = car1.getPolicyOncomingRefund();
-		System.out.println("Model : " + modelName[4] + " ; Owner : " + ownerName[4] + " ; Wheels : " + wheels[4] + " ; Policy Type : " + policyType[2] + " ; Policy Expiry " + policyExpiry[2]);
+		System.out.println("Model : " + modelName[4] + " ; Owner : " + ownerName[4] + " ; Wheels : " + wheels[4] + " ; Policy Type : " + policyType[2] + " ; Policy Expiry " + policyExpiry[2] + " ; selfRefund " + selfRefund[2] + " ; onComingRefund " + onComingRefund[2]);
 		
 		modelName[5] = car2.getModel();
 		ownerName[5] = car2.getOwnerName();
@@ -110,7 +110,7 @@ public class RoadAccidentInsurance {
 		policyExpiry[3] = car2.getPolicyExpiry();
 		selfRefund[3] = car2.getPolicySelfRefund();
 		onComingRefund[3] = car2.getPolicyOncomingRefund();
-		System.out.println("Model : " + modelName[5] + " ; Owner : " + ownerName[5] + " ; Wheels : " + wheels[5] + " ; Policy Type : " + policyType[3] + " ; Policy Expiry " + policyExpiry[3]);
+		System.out.println("Model : " + modelName[5] + " ; Owner : " + ownerName[5] + " ; Wheels : " + wheels[5] + " ; Policy Type : " + policyType[3] + " ; Policy Expiry " + policyExpiry[3] + " ; selfRefund " + selfRefund[3] + " ; onComingRefund " + onComingRefund[3]);
 		/*for(int i = 0; i < 6; i++) {
 			for(int j = 0; j < 6; j++) {
 				if( !vehicle[i].equals(vehicle[j]) ) {
