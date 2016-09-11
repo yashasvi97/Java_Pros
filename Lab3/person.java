@@ -217,6 +217,23 @@ class Person {
 			return 0;
 		}
 	}
+	/*public int changeStatus(String status, String name) {
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(new BufferedWriter(new FileWriter("input.txt",true)));
+			String line = null;
+			while((line= out.readLine()) != null) {
+				String[] arr = line.split(",");
+				if(arr[0].equals(name)) {
+
+				}
+		}
+		finally {
+			if (out != null) {
+				out.close();
+			}
+		}
+	}*/
 	public static List<Person> Register(String handle, List<Person> list) throws IOException{
 		Scanner scanner = new Scanner(System.in);
 		int success = Person.ifRegistered(handle);
@@ -264,19 +281,19 @@ class Person {
 	public void callSession(List<Person> networkUsers) {
 		Scanner scanner = new Scanner(System.in);
 		int option;
-		System.out.println(this.getUserDispName() + " logged in now");
-		System.out.println(this.getUserStatus());
+		System.out.println("\n" + this.getUserDispName() + " logged in now");
+		System.out.println(this.getUserStatus() + "\n");
 		while(true) {
 			this.callSessionMenu();
 			option = scanner.nextInt();
 			if(option == 1) {
-				// this.callListFriends();
+				this.callListFriends();
 			}
 			else if( option == 2) {
-				// this.callSearch();
+				this.callSearch(networkUsers);
 			}
 			else if(option == 3) {
-				// this.callUpdateStatus();
+				networkUsers = this.callUpdateStatus(networkUsers);
 			}
 			else if(option == 4) {
 				// this.callPendingRequests();
@@ -295,8 +312,88 @@ class Person {
 		System.out.println("5. Logout ");
 	}
 	private void callLogout() {
-		System.out.println("User " + this.getUserName() + " logged out successfully");
+		System.out.println("User " + this.getUserName() + " logged out successfully. \n");
 		return ;
+	}
+	private void callListFriends() {
+		List<String> userFriends = this.getMyFriends();
+		if(this.getUserFriends() != 0) {
+			System.out.print("Your friends are: ");
+			for(int i = 0; i < this.getUserFriends(); i++) {
+				System.out.print(userFriends.get(i) + " ");
+			}
+			System.out.println("");
+		}
+		else {
+			System.out.println("You do not have any friends now. \n");
+		}
+	}
+	private List<Person> callUpdateStatus(List<Person> networkUsers) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter status:	");
+		String status = scanner.nextLine();
+		this.setStatus(status);
+		for( Person temp : networkUsers ) {
+			if( temp.getUserName().equals(this.getUserName()) ) {
+				temp.setStatus(status);
+			}
+		}
+		//change in file!!!!
+
+		System.out.println("\n Status updated!!!");
+		return networkUsers;
+	}
+	private void callSearch(List<Person> networkUsers) {
+		System.out.println("Enter name(handle):		");
+		Scanner scanner = new Scanner(System.in);
+		String searchName = scanner.nextLine();
+		Person temp = Person.findUser(searchName, networkUsers);
+
+		if(temp != null) {
+			List<String> friendsList = this.getMyFriends();
+			List<String> searchFriendsList = temp.getMyFriends();
+			for( String tempFriend : friendsList ) {
+				if( tempFriend.equals(searchName) ) {
+					
+					//if searchName is user's friend
+
+					System.out.println("You and " + searchName + " are friends.\n");
+					System.out.println("Display Name:	" + temp.getUserDispName());
+					System.out.println("Status:	" + temp.getUserStatus());
+					System.out.print("Friends:	");
+					for( String friends : searchFriendsList ) {
+						if( !friends.equals(this.getUserName()) ) {
+							System.out.print(friends + ", ");
+						}
+ 					}
+ 					System.out.println();
+
+ 					//mutual friends logic!!!
+ 					System.out.println("Mutual Friends:		");
+
+ 					//back logic!!!!
+				}
+				else {
+					
+					//if searchName is not user's friend
+
+					System.out.println(searchName + " is not a friend");
+
+					//mutual friends logic!!!
+ 					System.out.println("Mutual Friends:		");
+
+ 					//shotest route logic!!!
+
+ 					//send request logic!!!
+ 					System.out.println("	1. Send Request");
+ 					
+ 					//back logic!!!
+				}
+			} 
+		}
+		else {
+
+		}
 	}
 	/*public static void main(String[] args) throws IOException {
 		Scanner scanner = new Scanner(System.in);
