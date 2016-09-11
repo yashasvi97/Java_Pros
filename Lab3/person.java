@@ -343,56 +343,111 @@ class Person {
 		System.out.println("\n Status updated!!!");
 		return networkUsers;
 	}
+	private boolean ifFriends(Person searched) {
+		//get logged in user's friend list
+		List<String> friendsList = this.getMyFriends();
+		//get the handle's friendlist
+		List<String> searchFriendsList = searched.getMyFriends();
+		//
+		for( String tempFriendName : friendsList ) {
+			if( tempFriendName.equals(searched.getUserName()) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	private List<String> findMutualFriends(List<String> searchFriendsList) {
+		//get loggedin user's friend list
+		List<String> friendsList = this.getMyFriends();
+		//get the friend's friendlist
+		List<String> Mutual = new ArrayList<String>();
+		for (String tempFriend: friendsList ) {
+			if(searchFriendsList.contains(tempFriend)) {
+				//that friend is mutual
+				Mutual.add(tempFriend);
+			}
+		}
+		return Mutual;
+	}
+	private void callBackMenu(String option) {
+		Scanner scanner = new Scanner(System.in);
+		String str;
+		if(option.equals("Friend")) {
+			System.out.println("b.back");
+			//here exception needs to be there to check for a valid input
+			str = scanner.next();
+			if(str.equals("b")) {
+				return ;
+			}
+			else {
+				System.out.println("wrong input");
+				str = scanner.next();
+				while(!str.equals("b")) {
+					System.out.println("wrong input");
+					str = scanner.next();
+				}
+				return;
+			}
+		}
+	}
+	private void showFriendsMenu(Person friend) {
+		System.out.println("You and " + friend.getUserName() + " are friends.\n");
+		System.out.println("Display Name:	" + friend.getUserDispName());
+		System.out.println("Status:	" + friend.getUserStatus());
+		//show all the friends except the logged in user and mutual friends
+		List<String> searchFriendsList = friend.getMyFriends();
+		// now we need to make a new list of two types 1. Mutual and 2. Other friends
+		//first finding mutual friends
+		List<String> mutualFriends = this.findMutualFriends(searchFriendsList);
+		//now print all the friends except mutual
+		System.out.print("Friends:	");
+		for (String friends : searchFriendsList) {
+			if(!mutualFriends.contains(friends) && !friends.equals(this.getUserName())) {
+				System.out.print(friends + ", ");
+			}
+		}
+		System.out.println();
+		//mutual friends logic!!!
+		System.out.print("Mutual Friends:		");
+		for( String friends : mutualFriends ) {
+			System.out.print(friends + ", ");
+		}
+		System.out.println();
+		this.callBackMenu("Friend");
+	}
 	private void callSearch(List<Person> networkUsers) {
-		System.out.println("Enter name(handle):		");
+		System.out.print("Enter name(handle):		");
 		Scanner scanner = new Scanner(System.in);
 		String searchName = scanner.nextLine();
 		Person temp = Person.findUser(searchName, networkUsers);
 
 		if(temp != null) {
-			List<String> friendsList = this.getMyFriends();
-			List<String> searchFriendsList = temp.getMyFriends();
-			for( String tempFriend : friendsList ) {
-				if( tempFriend.equals(searchName) ) {
+			//user exists in the DB
+			//now check whether friend or not
+			if(this.ifFriends(temp) == true) {
+				//i.e searchName is user's friend
+				this.showFriendsMenu(temp);
+			}
+			else {
+				
+				//if searchName is not user's friend
+
+				System.out.println(searchName + " is not a friend");
+
+				//mutual friends logic!!!
+					System.out.println("Mutual Friends:		");
+
+					//shotest route logic!!!
+
+					//send request logic!!!
+					System.out.println("	1. Send Request");
 					
-					//if searchName is user's friend
-
-					System.out.println("You and " + searchName + " are friends.\n");
-					System.out.println("Display Name:	" + temp.getUserDispName());
-					System.out.println("Status:	" + temp.getUserStatus());
-					System.out.print("Friends:	");
-					for( String friends : searchFriendsList ) {
-						if( !friends.equals(this.getUserName()) ) {
-							System.out.print(friends + ", ");
-						}
- 					}
- 					System.out.println();
-
- 					//mutual friends logic!!!
- 					System.out.println("Mutual Friends:		");
-
- 					//back logic!!!!
-				}
-				else {
-					
-					//if searchName is not user's friend
-
-					System.out.println(searchName + " is not a friend");
-
-					//mutual friends logic!!!
- 					System.out.println("Mutual Friends:		");
-
- 					//shotest route logic!!!
-
- 					//send request logic!!!
- 					System.out.println("	1. Send Request");
- 					
- 					//back logic!!!
-				}
-			} 
+					//back logic!!!
+			}
 		}
 		else {
-
+			//if handle not in DB need to show exception
+			System.out.println("User " + searchName + " not found!" + "\n");
 		}
 	}
 	/*public static void main(String[] args) throws IOException {
