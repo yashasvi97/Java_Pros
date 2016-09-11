@@ -217,23 +217,42 @@ class Person {
 			return 0;
 		}
 	}
-	/*public int changeStatus(String status, String name) {
+	public void changeStatus(String status, String name) throws IOException {
+		BufferedReader in = null;
+		List<String> content = new ArrayList<String>(), finalContent = new ArrayList<String>();
+		try {
+			in = new BufferedReader(new FileReader("input.txt"));
+			String line = null;
+			while((line= in.readLine()) != null) {
+				content.add(line);
+			}
+		}
+		finally {
+			if (in != null) {
+				in.close();
+			}
+		}
+		for( String row : content ) {
+			String[] arr = row.split(",");
+			if(arr[0].equals(name)) {
+				arr[arr.length - 1] = status;
+			}
+			String newString = String.join(",",arr);
+			finalContent.add(newString);
+		}
 		PrintWriter out = null;
 		try {
-			out = new PrintWriter(new BufferedWriter(new FileWriter("input.txt",true)));
-			String line = null;
-			while((line= out.readLine()) != null) {
-				String[] arr = line.split(",");
-				if(arr[0].equals(name)) {
-
-				}
+			out = new PrintWriter(new BufferedWriter(new FileWriter("input.txt",false)));
+			for( String row : finalContent ) {
+				out.print(row + "\n");
+			}
 		}
 		finally {
 			if (out != null) {
 				out.close();
 			}
 		}
-	}*/
+	}
 	public static List<Person> Register(String handle, List<Person> list) throws IOException{
 		Scanner scanner = new Scanner(System.in);
 		int success = Person.ifRegistered(handle);
@@ -278,7 +297,7 @@ class Person {
 			return null;
 		}
 	}
-	public void callSession(List<Person> networkUsers) {
+	public void callSession(List<Person> networkUsers) throws IOException {
 		Scanner scanner = new Scanner(System.in);
 		int option;
 		System.out.println("\n" + this.getUserDispName() + " logged in now");
@@ -328,7 +347,7 @@ class Person {
 			System.out.println("You do not have any friends now. \n");
 		}
 	}
-	private List<Person> callUpdateStatus(List<Person> networkUsers) {
+	private List<Person> callUpdateStatus(List<Person> networkUsers) throws IOException {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter status:	");
 		String status = scanner.nextLine();
@@ -339,7 +358,7 @@ class Person {
 			}
 		}
 		//change in file!!!!
-
+		changeStatus(status, this.getUserName());
 		System.out.println("\n Status updated!!!");
 		return networkUsers;
 	}
