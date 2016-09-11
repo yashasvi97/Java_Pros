@@ -6,7 +6,6 @@ class MyNetwork {
 		Scanner scanner = new Scanner(System.in);
 		List<Person> networkUsers = new ArrayList<Person> ();
 		networkUsers = Person.ReadDB();
-		Person.ReadList(networkUsers);
 		Person Session;
 		//now network users contains all the data fetched from the DB
 		int input ;
@@ -17,27 +16,35 @@ class MyNetwork {
 			if(input == 1) {
 				System.out.println("Enter the Username");
 				String username = scanner.next();
-				Person.Register(username);
-				Person.ReadList(networkUsers);
+				networkUsers = Person.Register(username, networkUsers);
 			}
 			else if(input == 2) {
 				System.out.println("Enter the Username to login");
 				String username = scanner.next();
 				Person temp;
-				temp = Person.Login(username);
-				if(temp != null) {
+				temp = Person.Login(username, networkUsers);
+				if(temp == null) {
+					//i.e user not registered
+					System.out.println("This username does not exists!!! Register first");
+				}
+				else if(temp.getUserName().equals("temp")) {
+					//i.e password wrong redirect to take password again
+					temp = Person.Login(username, networkUsers);
+					while(temp.getUserName().equals("temp")) {
+						temp = Person.Login(username, networkUsers);
+					}//will break the loop only when the username attribute is not temp
 					Session = temp;
-					break;//only way to break this infinite loop
+					Session.callSession(networkUsers);
+					Session = null;
 				}
 				else {
-					System.out.println("Either Password input Wrong or such username does not exist");
+					Session = temp;
+					Session.callSession(networkUsers);
+					Session = null;
 				}
 			}
 			else
 				System.out.println("Wrong Input! Enter valid number");
-		}
-		//program can reach here only if the user is logged in else it will get stuck in while loop
-		Person.ReadList(networkUsers);
-		System.out.println(Session.getUserDispName + " logged in now");
+		}	
 	}
 }

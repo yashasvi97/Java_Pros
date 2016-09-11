@@ -200,22 +200,29 @@ class Person {
 			}
 		}
 	}
-	/*public static Person findUser(String handle) {
-		Person user;
-		//only structure
-		return user;
+	public static Person findUser(String handle, List<Person> list) {
+		for (Person temp : list) {
+			if(temp.getUserName().equals(handle)) {
+				return temp;
+			}
+		}
+		return null;
 	}
 	public int checkPassword(String password) {
-		int c;
-		//only structure 
-		return c;
-	}*/
-	public static void Register(String handle) {
+		String origPassword = this.getUserPassword();
+		if(origPassword.equals(password)) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+	public static List<Person> Register(String handle, List<Person> list) throws IOException{
 		Scanner scanner = new Scanner(System.in);
 		int success = Person.ifRegistered(handle);
 		if(success == 1){
 			System.out.println("Username already registered!! Please Login");
-			return ;
+			return list;
 		}
 		else {
 			System.out.println("Enter the Password");
@@ -224,15 +231,17 @@ class Person {
 			String displayname = scanner.next();
 			Person user = new Person(handle, password, displayname);
 			Person.RegisterInDB(user);
+			list.add(user);
 			System.out.println("Registration is successful. User " + user.getUserName() + " created.");
+			return list;
 		}
 	}
-	public static Person Login(String handle) {
+	public static Person Login(String handle, List<Person> list) throws IOException{
 		Scanner scanner = new Scanner(System.in);
 		int success = Person.ifRegistered(handle);
 		if(success == 1) {
 			//meaning such user exists
-			Person foundUser = Person.findUser(handle);
+			Person foundUser = Person.findUser(handle,list);//foundUser will never get null as it is already checking 
 			System.out.println("Enter the Password");
 			String password = scanner.next();
 			int authorised = foundUser.checkPassword(password);
@@ -241,15 +250,53 @@ class Person {
 				return foundUser;
 			}
 			else {
+				//password wrong
 				System.out.println("Password does not match");
-				return null;
+				Person temp = new Person("temp","temp123","temp");
+				return temp;
 			}
 		}
 		else {
 			//i.e not registered. 
-			System.out.println("This username does not exists!!! Register first");
 			return null;
 		}
+	}
+	public void callSession(List<Person> networkUsers) {
+		Scanner scanner = new Scanner(System.in);
+		int option;
+		System.out.println(this.getUserDispName() + " logged in now");
+		System.out.println(this.getUserStatus());
+		while(true) {
+			this.callSessionMenu();
+			option = scanner.nextInt();
+			if(option == 1) {
+				// this.callListFriends();
+			}
+			else if( option == 2) {
+				// this.callSearch();
+			}
+			else if(option == 3) {
+				// this.callUpdateStatus();
+			}
+			else if(option == 4) {
+				// this.callPendingRequests();
+			}
+			else {
+				this.callLogout();
+				return;
+			}
+		}
+	}
+	private void callSessionMenu() {
+		System.out.println("1. List Friends ");
+		System.out.println("2. Search ");
+		System.out.println("3. Update status ");
+		System.out.println("4. Pending request ");
+		System.out.println("5. Logout ");
+	}
+	private void callLogout() {
+		System.out.println("User " + this.getUserName() + " logged out successfully");
+		return ;
 	}
 	/*public static void main(String[] args) throws IOException {
 		Scanner scanner = new Scanner(System.in);
