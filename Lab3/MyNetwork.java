@@ -447,4 +447,3 @@ class MyNetwork {
 		}	
 	}
 }
-// new mynetwork
