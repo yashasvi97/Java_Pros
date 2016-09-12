@@ -126,23 +126,34 @@ class MyNetwork {
 		}
 		return null;
 	}
-	/*public int changeStatus(String status, String name) {
+	public static void changeDB(List<Person> networkUsers) throws IOException {
 		PrintWriter out = null;
 		try {
-			out = new PrintWriter(new BufferedWriter(new FileWriter("input.txt",true)));
-			String line = null;
-			while((line= out.readLine()) != null) {
-				String[] arr = line.split(",");
-				if(arr[0].equals(name)) {
-
+			out = new PrintWriter(new BufferedWriter(new FileWriter("input.txt",false)));
+			for( Person user : networkUsers ) {
+				out.print(user.getUserName() + "," + user.getUserPassword() + "," + user.getUserDispName() + "," + user.getUserFriends() + ",");
+				List<String> friendList = user.getMyFriends();
+				if(friendList != null) {
+					for (String tempstr : friendList) {
+						out.print(tempstr + ",");
+					}
 				}
+				out.print(user.getUserRequests() + "," );
+				List<String> requestList = user.getMyRequests();
+				if(requestList != null) {
+					for (String tempstr : requestList) {
+						out.print(tempstr + ",");
+					}
+				}
+				out.print(user.getUserStatus() + "\n");
+			}
 		}
 		finally {
 			if (out != null) {
 				out.close();
 			}
 		}
-	}*/
+	}
 	public static List<Person> Register(String handle, List<Person> list) throws IOException{
 		Scanner scanner = new Scanner(System.in);
 		int success = MyNetwork.ifRegistered(handle);
@@ -187,7 +198,7 @@ class MyNetwork {
 			return null;
 		}
 	}
-	public static void callSession(Person Session, List<Person> networkUsers) {
+	public static void callSession(Person Session, List<Person> networkUsers) throws IOException {
 		Scanner scanner = new Scanner(System.in);
 		int option;
 		System.out.println("\n" + Session.getUserDispName() + " logged in now");
@@ -237,7 +248,7 @@ class MyNetwork {
 			System.out.println("You do not have any friends now. \n");
 		}
 	}
-	public static List<Person> callUpdateStatus(Person Session, List<Person> networkUsers) {
+	public static List<Person> callUpdateStatus(Person Session, List<Person> networkUsers) throws IOException {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter status:	");
 		String status = scanner.nextLine();
@@ -248,7 +259,7 @@ class MyNetwork {
 			}
 		}
 		//change in file!!!!
-
+		MyNetwork.changeDB(networkUsers);
 		System.out.println("\n Status updated!!!");
 		return networkUsers;
 	}
