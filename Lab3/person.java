@@ -217,8 +217,8 @@ class Person {
 			return 0;
 		}
 	}
-	public void changeStatus(String status, String name) throws IOException {
-		BufferedReader in = null;
+	public void changeStatus(List<Person> networkUsers) throws IOException {
+		/*BufferedReader in = null;
 		List<String> content = new ArrayList<String>(), finalContent = new ArrayList<String>();
 		try {
 			in = new BufferedReader(new FileReader("input.txt"));
@@ -232,19 +232,32 @@ class Person {
 				in.close();
 			}
 		}
-		for( String row : content ) {
-			String[] arr = row.split(",");
-			if(arr[0].equals(name)) {
-				arr[arr.length - 1] = status;
-			}
-			String newString = String.join(",",arr);
-			finalContent.add(newString);
-		}
+		*/	
 		PrintWriter out = null;
 		try {
 			out = new PrintWriter(new BufferedWriter(new FileWriter("input.txt",false)));
-			for( String row : finalContent ) {
-				out.print(row + "\n");
+			for( Person user : networkUsers ) {
+				out.print(user.getUserName() + "," + user.getUserPassword() + "," + user.getUserDispName() + "," + user.getUserFriends() + ",");
+				List<String> friendList = user.getMyFriends();
+				if(friendList != null) {
+					for (String tempstr : friendList) {
+						out.print(tempstr + ",");
+					}
+				}
+				// else {
+				// 	out.print(friendList);
+				// }
+				out.print(user.getUserRequests() + "," );
+				List<String> requestList = user.getMyRequests();
+				if(requestList != null) {
+					for (String tempstr : requestList) {
+						out.print(tempstr + ",");
+					}
+				}
+				// else {
+				// 	out.print(user.getMyRequests());
+				// }
+				out.print(user.getUserStatus() + "\n");
 			}
 		}
 		finally {
@@ -358,8 +371,8 @@ class Person {
 			}
 		}
 		//change in file!!!!
-		changeStatus(status, this.getUserName());
-		System.out.println("\n Status updated!!!");
+		changeStatus(status, this.getUserName(), networkUsers);
+		System.out.println("\nStatus updated!!!");
 		return networkUsers;
 	}
 	private boolean ifFriends(Person searched) {
@@ -435,7 +448,7 @@ class Person {
 		this.callBackMenu("Friend");
 	}
 	private void callSearch(List<Person> networkUsers) {
-		System.out.print("Enter name(handle):		");
+		System.out.print("Enter name(handle):	");
 		Scanner scanner = new Scanner(System.in);
 		String searchName = scanner.nextLine();
 		Person temp = Person.findUser(searchName, networkUsers);
