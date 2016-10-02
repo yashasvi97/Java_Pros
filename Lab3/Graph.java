@@ -60,6 +60,7 @@ class Graph {
 	public boolean memberOf(String node) {
 		return nodes.contains(node);
 	}
+<<<<<<< HEAD
 	public String toString() {
 		int i = 0;
 		String string = "";
@@ -75,6 +76,8 @@ class Graph {
 		}
 		return string;
 	}
+=======
+>>>>>>> 878577df245febd2699f6acfaae618dbbeea7aef
 }
 class BreadthFirstSearch {
 	private ArrayList<String> shortestPath = new ArrayList<String>();
