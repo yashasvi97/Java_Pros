@@ -1,4 +1,8 @@
- // package socialNetwork;
+/*	
+	@author(s) :	
+					Yashasvi Baweja		2015116
+					Viraj Parimi		2015068
+*/
 import java.util.*;
 import java.io.*;
 import java.lang.*;
@@ -61,6 +65,15 @@ class Person {
 	}
 	void addMyRequests(String request) {
 		this.myRequests.add(request);
+	}
+	void removeMyRequests(String request) {
+		int i;
+		for ( i = 0; i < myRequests.size() ; ++i) {
+			if(myRequests.get(i).equals(request)){
+				break;
+			}
+		}
+		myRequests.remove(i);
 	}
 	public int checkPassword(String password) {
 		String origPassword = this.getUserPassword();
