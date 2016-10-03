@@ -20,11 +20,11 @@ public class MediaSystem {
 		while(input != 0) {
 			switch (input) {
 				case 1 : {
-					System.out.println("1. 	Audio");
+					System.out.println("\n1. 	Audio");
 					System.out.println("2. 	Movie");
 					int x = scanner.nextInt();
 					if(x == 1) {
-						System.out.println("1. 	Decrypt");
+						System.out.println("\n1. 	Decrypt");
 						System.out.println("2. 	Encrypt");
 						int y = scanner.nextInt();
 						if(y == 1) {
@@ -36,11 +36,11 @@ public class MediaSystem {
 							audioMakeSerialisable(audioList);
 						}
 						else {
-							System.out.println("Wrong input!");
+							System.out.println("\nWrong input!");
 						}
 					}
 					else if (x == 2) {
-						System.out.println("1. 	Decrypt");
+						System.out.println("\n1. 	Decrypt");
 						System.out.println("2. 	Encrypt");
 						int y = scanner.nextInt();
 						if(y == 1) {
@@ -52,11 +52,11 @@ public class MediaSystem {
 							movieMakeSerialisable(movieList);
 						}
 						else {
-							System.out.println("Wrong input!");
+							System.out.println("\nWrong input!");
 						}
 					}
 					else {
-						System.out.println("Wrong input!");
+						System.out.println("\nWrong input!");
 					}
 					break;
 				}
@@ -128,37 +128,39 @@ public class MediaSystem {
 					break;
 				}
 				case 6 : {
-					System.out.println("Enter the option whose rating you want to change");
-					System.out.println("1.Audio");
-					System.out.println("2.Movie");
+					System.out.println("1. 	Audio");
+					System.out.println("2. 	Movie");
+					System.out.print("Enter the option whose rating you want to change :- ");
 					int x = scanner.nextInt();
 					if(x == 1) {
-						System.out.println("Enter the Song whose rating you want to change");
+						System.out.print("Enter the Song whose rating you want to change :- ");
 						String entityToBeSearched = scanner.next();
-						System.out.println("Enter the new rating");
+						System.out.print("Enter the new rating :- ");
 						int newRating = scanner.nextInt();
 						for (Audio tempAudio : audioList) {
 							if(tempAudio.getAudioName().equals(entityToBeSearched)) {
 								tempAudio.setRating(newRating);
 								//now need to update the file
+								System.out.println("Rating of the song " + entityToBeSearched + " has been changed.\n" );
 							}
 						}
 						updateInAudioDB(audioList);
 					}
 					else if(x == 2) {
-						System.out.println("Enter the Movie whose rating you want to change");
+						System.out.print("Enter the Movie whose rating you want to change :- ");
 						String entityToBeSearched = scanner.next();
-						System.out.println("Enter the new rating");
+						System.out.println("Enter the new rating :- ");
 						int newRating = scanner.nextInt();
 						for (Movie tempMovie : movieList) {
 							if(tempMovie.getTitle().equals(entityToBeSearched)) {
 								tempMovie.setRating(newRating);
+								System.out.println("Rating of the movie " + entityToBeSearched + " has been changed.\n" );
 							}
 						}
 						updateInMovieDB(movieList);
 					}
 					else {
-						System.out.println("wrong number!!!");//potential exception
+						System.out.println("\nWrong number!!!"); //potential exception
 					}
 					break;
 				}
@@ -220,7 +222,7 @@ public class MediaSystem {
 		}
 	}
 	public static void showMenu() {
-		System.out.println("1. 	Encrypt and Decrypt MediaSystem class(Bonus)");
+		System.out.println("\n1. 	Encrypt and Decrypt MediaSystem class(Bonus)");
 	 	System.out.println("2. 	View a list of all the songs/movies in the library");
 	 	System.out.println("3. 	View a list of top “k” songs/movies by their rating");
 	 	System.out.println("4. 	Search and display songs based on genre");
@@ -247,7 +249,7 @@ public class MediaSystem {
 		return movieList;
 	}
 	public static void movieMakeSerialisable(List<Movie> movieList) throws IOException, FileNotFoundException {
-		System.out.println("Making Movie serialisable");
+		System.out.println("\nMaking Movie serialisable");
 		ObjectOutputStream moviesOut = null;
 		try {
 			moviesOut = new ObjectOutputStream(new Encrypt(new FileOutputStream("movies.ser")));
@@ -263,7 +265,7 @@ public class MediaSystem {
 		}
 	}
 	public static void audioMakeSerialisable(List<Audio> audioList) throws IOException, FileNotFoundException {
-		System.out.println("Making Audio serialisable");
+		System.out.println("\nMaking Audio serialisable");
 		ObjectOutputStream audiosOut = null;
 		try {
 			audiosOut = new ObjectOutputStream(new Encrypt(new FileOutputStream("songs.ser")));
