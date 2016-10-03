@@ -8,16 +8,16 @@ Song5,Movie2,Artist1841,2003,jazz,4.72,1,4:63
 Song6,Movie20,Artist2690,1996,country music,3.91,1,4:83
 Song7,Movie16,Artist2565,2006,dance,3.44,4,3:10
 Song8,Movie9,Artist3021,1995,jazz,2.45,2,3:33
-Song9,No Movie,Artist2057,2001,sad,4.50,5,3:04
+Song9,No Movie,Artist2057,2001,sad,4.5,5,3:04
 Song10,Movie18,Artist4854,1998,rock,2.01,5,3:30
 Song11,Movie20,Artist2795,1996,country music,4.63,5,2:13
-Song12,Movie27,Artist3796,1993,hip-hop,3.60,1,2:59
+Song12,Movie27,Artist3796,1993,hip-hop,3.6,1,2:59
 Song13,Movie27,Artist1725,1993,mashup,4.51,3,4:36
 Song14,Movie23,Artist1978,2000,rock,2.17,5,2:90
 Song15,Movie25,Artist4433,2009,dance,3.18,5,4:64
 Song16,Movie5,Artist331,1990,jazz,3.03,5,2:33
 Song17,Movie12,Artist1822,2001,mashup,2.77,4,4:83
-Song18,Movie19,Artist944,2004,country music,2.42,2,3:46
+Song18,Movie19,Artist944,2004,country music,2.42,3,3:46
 Song19,No Movie,Artist361,1996,hip-hop,4.02,3,4:81
 Song20,Movie23,Artist1790,2000,bollywood,3.96,4,3:42
 Song21,Movie5,Artist2689,1990,rap,3.49,2,2:61
