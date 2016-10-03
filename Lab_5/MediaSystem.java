@@ -1,3 +1,8 @@
+/*
+	@author (s):
+					Viraj Parimi 2015068
+					Yashasvi Baweja 2015116 
+*/
 import java.lang.*;
 import java.util.*;
 import java.io.*;
@@ -333,6 +338,7 @@ public class MediaSystem {
 	public static <T> void printList( List<T> list ) {
 		int count = 1;
 		if ( list.get(0) instanceof Audio ) {
+			@SuppressWarnings("unchecked")
 			List<Audio> newList = (List<Audio>)list;
 			for (Audio audioTemp : newList) {
 				System.out.println( "Song Number :- " + count );
@@ -341,6 +347,7 @@ public class MediaSystem {
 			}
 		}
 		else if( list.get(0) instanceof Movie ) {
+			@SuppressWarnings("unchecked")
 			List<Movie> newList = (List<Movie>)list;
 			for (Movie movieTemp : newList) {
 				System.out.println( "Movie Number :- " + count );
