@@ -30,11 +30,9 @@ public class MediaSystem {
 						if(y == 1) {
 							//audio read
 							audioList = audioReadSerialisable(audioListSize);
-							/*System.out.println("After serialisation :-");
-							printAudioList(audioList);*/
 						}
 						else if(y == 2) {
-							//audop write
+							//audio write
 							audioMakeSerialisable(audioList);
 						}
 						else {
@@ -48,8 +46,6 @@ public class MediaSystem {
 						if(y == 1) {
 							//movie read
 							movieList = movieReadSerialisable(movieListSize);
-							/*System.out.println("After serialisation :-");
-							printMovieList(movieList);*/
 						}
 						else if(y == 2) {
 							//movie write
@@ -65,8 +61,8 @@ public class MediaSystem {
 					break;
 				}
 				case 2 : {
-					printMovieList(movieList);
-					printAudioList(audioList);
+					printList(movieList);
+					printList(audioList);
 					break;
 				}
 				case 3 : {
@@ -332,20 +328,23 @@ public class MediaSystem {
 		}
 		return audioList;
 	}
-	public static void printAudioList(List<Audio> list) {
+	public static <T> void printList( List<T> list ) {
 		int count = 1;
-		for (Audio audioTemp : list) {
-			System.out.println( "Song Number :- " + count );
-			System.out.println( "Song Name :- " + audioTemp.getAudioName() + "\nMovie Name :- " + audioTemp.getTitle() + "\nArtist :- " + audioTemp.getArtistName() + "\nYear of Release :- " + audioTemp.getYearOfRelease() + "\nGenre :- " + audioTemp.getGenre() + "\nSize :- " + audioTemp.getSize() + " MB\nRating :- " + audioTemp.getRating() + "\nDuration(min) :- " + audioTemp.getDuration() + "\n");
-			count++;	
+		if ( list.get(0) instanceof Audio ) {
+			List<Audio> newList = (List<Audio>)list;
+			for (Audio audioTemp : newList) {
+				System.out.println( "Song Number :- " + count );
+				System.out.println( "Song Name :- " + audioTemp.getAudioName() + "\nMovie Name :- " + audioTemp.getTitle() + "\nArtist :- " + audioTemp.getArtistName() + "\nYear of Release :- " + audioTemp.getYearOfRelease() + "\nGenre :- " + audioTemp.getGenre() + "\nSize :- " + audioTemp.getSize() + " MB\nRating :- " + audioTemp.getRating() + "\nDuration(min) :- " + audioTemp.getDuration() + "\n");
+				count++;	
+			}
 		}
-	}
-	public static void printMovieList(List<Movie> list) {
-		int count = 1;
-		for (Movie movieTemp : list) {
-			System.out.println( "Movie Number :- " + count );
-			System.out.println( "Movie Name :- " + movieTemp.getTitle() + "\nArtist :- " + movieTemp.getArtistName() + "\nYear of Release :- " + movieTemp.getYearOfRelease() + "\nGenre :- " + movieTemp.getGenre() + "\nSize :- " + movieTemp.getSize() + " GB\nRating :- " + movieTemp.getRating() + "\nDuration(hrs) :- " + movieTemp.getDuration() + "\nDirector :- " + movieTemp.getDirector() + "\nProducer :- " + movieTemp.getProducer() + "\nCertification :- " + movieTemp.getCertification() + "\n");
-			count++;
+		else if( list.get(0) instanceof Movie ) {
+			List<Movie> newList = (List<Movie>)list;
+			for (Movie movieTemp : newList) {
+				System.out.println( "Movie Number :- " + count );
+				System.out.println( "Movie Name :- " + movieTemp.getTitle() + "\nArtist :- " + movieTemp.getArtistName() + "\nYear of Release :- " + movieTemp.getYearOfRelease() + "\nGenre :- " + movieTemp.getGenre() + "\nSize :- " + movieTemp.getSize() + " GB\nRating :- " + movieTemp.getRating() + "\nDuration(hrs) :- " + movieTemp.getDuration() + "\nDirector :- " + movieTemp.getDirector() + "\nProducer :- " + movieTemp.getProducer() + "\nCertification :- " + movieTemp.getCertification() + "\n");
+				count++;
+			}
 		}
 	}
 	public static List<Audio> getAudioList() throws IOException, FileNotFoundException {
