@@ -1,3 +1,8 @@
+/*
+	@author (s):
+					Viraj Parimi 2015068
+					Yashasvi Baweja 2015116 
+*/
 import java.util.*;
 import java.io.*;
 class Encrypt extends OutputStream{
