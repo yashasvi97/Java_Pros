@@ -6,16 +6,15 @@ public class MediaSystem {
 		int movieListSize = 0, audioListSize = 0;
 								
 		// working wiht movie.txt
-		List<Movie> movieList = MediaSystem.getMovieList();
+		List<Movie> movieList = getMovieList();
 		
 		// working with song.txt
-		List<Audio> audioList = MediaSystem.getAudioList();
+		List<Audio> audioList = getAudioList();
 		
-		// serialising files
 		movieListSize = movieList.size();
 		audioListSize = audioList.size();
 
-		MediaSystem.showMenu();
+		showMenu();
 		Scanner scanner = new Scanner(System.in);
 		int input = Integer.parseInt(scanner.next());
 		while(input != 0) {
@@ -25,36 +24,36 @@ public class MediaSystem {
 					System.out.println("2. 	Movie");
 					int x = scanner.nextInt();
 					if(x == 1) {
-						System.out.println("1. 	Read");
-						System.out.println("2. 	Write");
+						System.out.println("1. 	Decrypt");
+						System.out.println("2. 	Encrypt");
 						int y = scanner.nextInt();
 						if(y == 1) {
 							//audio read
-							audioList = MediaSystem.audioReadSerialisable(audioList);
-							System.out.println("After serialisation :-");
-							printAudioList(audioList);
+							audioList = audioReadSerialisable(audioListSize);
+							/*System.out.println("After serialisation :-");
+							printAudioList(audioList);*/
 						}
 						else if(y == 2) {
 							//audop write
-							MediaSystem.audioMakeSerialisable(audioList);
+							audioMakeSerialisable(audioList);
 						}
 						else {
 							System.out.println("Wrong input!");
 						}
 					}
 					else if (x == 2) {
-						System.out.println("1. 	Read");
-						System.out.println("2. 	Write");
+						System.out.println("1. 	Decrypt");
+						System.out.println("2. 	Encrypt");
 						int y = scanner.nextInt();
 						if(y == 1) {
 							//movie read
-							movieList = MediaSystem.movieReadSerialisable(movieList);
-							System.out.println("After serialisation :-");
-							printMovieList(movieList);
+							movieList = movieReadSerialisable(movieListSize);
+							/*System.out.println("After serialisation :-");
+							printMovieList(movieList);*/
 						}
 						else if(y == 2) {
 							//movie write
-							MediaSystem.movieMakeSerialisable(movieList);
+							movieMakeSerialisable(movieList);
 						}
 						else {
 							System.out.println("Wrong input!");
@@ -74,11 +73,13 @@ public class MediaSystem {
 					System.out.print("Enter number of top entries you want to see :- ");
 					int k = scanner.nextInt();
 					System.out.println();
-					audioList = sortAudioList(audioList);
-					movieList = sortMovieList(movieList);
+					List<Audio> newAudioList = new ArrayList<Audio>(audioList);
+					List<Movie> newMovieList = new ArrayList<Movie>(movieList);
+					newAudioList = sortAudioList(newAudioList);
+					newMovieList = sortMovieList(newMovieList);
 					int count = 1;
 					System.out.println("Top " + k + " movies based on their rating are :- \n");
-					for ( Movie movieTemp : movieList ) {
+					for ( Movie movieTemp : newMovieList ) {
 						System.out.println( "Movie Number :- " + count );
 						System.out.println( "Movie Name :- " + movieTemp.getTitle() + "\nRating :- " + movieTemp.getRating() + "\n");
 						count++;
@@ -88,7 +89,7 @@ public class MediaSystem {
 					}
 					count = 1;
 					System.out.println("Top " + k + " songs based on their rating are :- \n");
-					for ( Audio audioTemp : audioList ) {
+					for ( Audio audioTemp : newAudioList ) {
 						System.out.println( "Song Number :- " + count );
 						System.out.println( "Song Name :- " + audioTemp.getAudioName() + "\nMovie Name :- " + audioTemp.getTitle() + "\nRating :- " + audioTemp.getRating() + "\n");
 						count++;
@@ -131,7 +132,39 @@ public class MediaSystem {
 					break;
 				}
 				case 6 : {
-
+					System.out.println("Enter the option whose rating you want to change");
+					System.out.println("1.Audio");
+					System.out.println("2.Movie");
+					int x = scanner.nextInt();
+					if(x == 1) {
+						System.out.println("Enter the Song whose rating you want to change");
+						String entityToBeSearched = scanner.next();
+						System.out.println("Enter the new rating");
+						int newRating = scanner.nextInt();
+						for (Audio tempAudio : audioList) {
+							if(tempAudio.getAudioName().equals(entityToBeSearched)) {
+								tempAudio.setRating(newRating);
+								//now need to update the file
+							}
+						}
+						updateInAudioDB(audioList);
+					}
+					else if(x == 2) {
+						System.out.println("Enter the Movie whose rating you want to change");
+						String entityToBeSearched = scanner.next();
+						System.out.println("Enter the new rating");
+						int newRating = scanner.nextInt();
+						for (Movie tempMovie : movieList) {
+							if(tempMovie.getTitle().equals(entityToBeSearched)) {
+								tempMovie.setRating(newRating);
+							}
+						}
+						updateInMovieDB(movieList);
+					}
+					else {
+						System.out.println("wrong number!!!");//potential exception
+					}
+					break;
 				}
 				case 7 : {
 					System.out.println();
@@ -156,16 +189,42 @@ public class MediaSystem {
 					break;
 				}
 			}
-			MediaSystem.showMenu();
+			showMenu();
 			input = scanner.nextInt();
 		}
-		
-		
-		
-		// deserialising files
+	}
+	public static void updateInAudioDB(List<Audio> list) throws IOException, FileNotFoundException{
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(new BufferedWriter(new FileWriter("song.txt",false)));
+			out.print("Song,Movie Name,Artist,Year of Release,Genre,Size,Rating,Duration\n");
+			for (Audio tempAudio : list) {
+				out.print(tempAudio.getAudioName() + "," + tempAudio.getTitle() + "," + tempAudio.getArtistName() + "," + tempAudio.getYearOfRelease() + "," + tempAudio.getGenre() + "," + tempAudio.getSize() + "," + tempAudio.getRating() + "," + tempAudio.getDuration() + "\n");
+			}
+		}
+		finally {
+			if(out != null) {
+				out.close();
+			}
+		}
+	}
+	public static void updateInMovieDB(List<Movie> list) throws IOException, FileNotFoundException{
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(new BufferedWriter(new FileWriter("movie.txt",false)));
+			out.print("Movie,Artist,Year of Release,Genre,Size,Rating,Duration,Director,Producer,Certification\n");
+			for (Movie tempMovie : list) {
+				out.print(tempMovie.getTitle() + "," + tempMovie.getArtistName() + "," + tempMovie.getYearOfRelease() + "," + tempMovie.getGenre() + "," + tempMovie.getSize() + "," + tempMovie.getRating() + "," + tempMovie.getDuration() + "," + tempMovie.getDirector() + "," + tempMovie.getProducer() + "," + tempMovie.getCertification() + "\n");
+			}
+		}
+		finally {
+			if(out != null) {
+				out.close();
+			}
+		}
 	}
 	public static void showMenu() {
-		System.out.println("1. 	Serialize and deserialize MediaSystem class.");
+		System.out.println("1. 	Encrypt and Decrypt MediaSystem class(Bonus)");
 	 	System.out.println("2. 	View a list of all the songs/movies in the library");
 	 	System.out.println("3. 	View a list of top “k” songs/movies by their rating");
 	 	System.out.println("4. 	Search and display songs based on genre");
@@ -195,7 +254,7 @@ public class MediaSystem {
 		System.out.println("Making Movie serialisable");
 		ObjectOutputStream moviesOut = null;
 		try {
-			moviesOut = new ObjectOutputStream(new FileOutputStream("movies.ser"));
+			moviesOut = new ObjectOutputStream(new Encrypt(new FileOutputStream("movies.ser")));
 			for ( Movie movieTemp : movieList ) {
 				moviesOut.writeObject(movieTemp);
 			}
@@ -211,7 +270,7 @@ public class MediaSystem {
 		System.out.println("Making Audio serialisable");
 		ObjectOutputStream audiosOut = null;
 		try {
-			audiosOut = new ObjectOutputStream(new FileOutputStream("songs.ser"));
+			audiosOut = new ObjectOutputStream(new Encrypt(new FileOutputStream("songs.ser")));
 			for ( Audio audioTemp : audioList ) {
 				audiosOut.writeObject(audioTemp);
 			}
@@ -223,14 +282,14 @@ public class MediaSystem {
 			}
 		}
 	}
-	public static List<Movie> movieReadSerialisable(List<Movie> movieList) throws IOException, FileNotFoundException {
+	public static List<Movie> movieReadSerialisable(int movieListSize) throws IOException, FileNotFoundException {
 		ObjectInputStream moviesIn = null;
+		List<Movie> movieList = new ArrayList<Movie>();
 		try {
-			moviesIn = new ObjectInputStream(new FileInputStream("movies.ser"));
-			int movieListSize = movieList.size();
+			moviesIn = new ObjectInputStream(new Decrypt(new FileInputStream("movies.ser")));
 			for(int i = 0; i < movieListSize; i++ ){
 				try {
-					movieList.set( i, (Movie)moviesIn.readObject() );
+					movieList.add((Movie)moviesIn.readObject() );
 				}
 				catch( EOFException e ) {
 					System.out.println("File ended unexpectedly. ");
@@ -248,14 +307,14 @@ public class MediaSystem {
 		}
 		return movieList;
 	}
-	public static List<Audio> audioReadSerialisable(List<Audio> audioList) throws IOException, FileNotFoundException {
+	public static List<Audio> audioReadSerialisable(int audioListSize) throws IOException, FileNotFoundException {
 		ObjectInputStream audiosIn = null;
+		List<Audio> audioList = new ArrayList<Audio>();
 		try {
-			audiosIn = new ObjectInputStream(new FileInputStream("songs.ser"));
-			int audioListSize = audioList.size();
+			audiosIn = new ObjectInputStream(new Decrypt(new FileInputStream("songs.ser")));
 			for(int i = 0; i < audioListSize; i++) {
 				try {
-					audioList.set(i, (Audio)audiosIn.readObject());
+					audioList.add((Audio)audiosIn.readObject());
 				}
 				catch( EOFException e) {
 					System.out.println("File ended unexpectedly");
